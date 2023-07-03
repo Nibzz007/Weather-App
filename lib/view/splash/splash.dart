@@ -5,7 +5,6 @@ import 'package:weather_app/controller/location_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/view/core/constants.dart';
 import 'package:weather_app/view/home/home_page.dart';
-import 'package:weather_app/view/search/search.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
@@ -34,28 +33,25 @@ class SplashScreen extends StatelessWidget {
               const Text('Weather App', style: splashTxtStyle),
               sbHeight20,
               GetBuilder<LocationController>(
-                  init: LocationController(),
-                  builder: (_locCtrl) {
-                    return ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: whiteColor),
-                        onPressed: () async {
-                          Position usrLocation =
-                              await _locCtrl.getLocationData();
-                          await weatherControl.getWeatherData(
-                              userLocation: usrLocation);
-                          await Get.offAll(() => HomePage());
-                        },
-                        child: _locCtrl.isLocationLoading
-                            ? const CircularProgressIndicator(
-                                strokeWidth: 2,
-                              )
-                            : const Text('Detect Location'));
-                  }),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => SearchPage());
-                  },
-                  child: const Text('Select Manually'))
+                init: LocationController(),
+                builder: (_locCtrl) {
+                  return ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: whiteColor),
+                    onPressed: () async {
+                      Position usrLocation = await _locCtrl.getLocationData();
+                      await weatherControl.getWeatherData(
+                          userLocation: usrLocation);
+                      await Get.offAll(() => HomePage());
+                    },
+                    child: _locCtrl.isLocationLoading
+                        ? const CircularProgressIndicator(
+                            strokeWidth: 2,
+                          )
+                        : const Text('Detect Location'),
+                  );
+                },
+              ),
             ],
           )),
         ),
